@@ -1,0 +1,17 @@
+.header {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header__title {
+    font-size: var(--font-size-large);
+}
+
+.header__points {
+    display: inline-block;
+    background-image: var(--color-gradient);
+    padding: 8px 18px;
+    border-radius: 30px;
+}
