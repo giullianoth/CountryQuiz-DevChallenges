@@ -46,6 +46,11 @@ body {
   align-items: center;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 button {
   font-size: inherit;
   font-family: inherit;
@@ -54,6 +59,12 @@ button {
   background: none;
   border: none;
   cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 .container {

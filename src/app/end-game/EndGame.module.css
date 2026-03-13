@@ -1,0 +1,37 @@
+.endGame__wrapper {
+    background-color: var(--color-background-secondary);
+    padding: 20px 10px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 480px;
+    margin-inline: auto;
+}
+
+.endGame__image {
+    margin: 0 auto 40px auto;
+}
+
+.endGame__title {
+    font-weight: var(--font-medium);
+    margin-bottom: 20px;
+}
+
+.endGame__points {
+    margin-bottom: 30px;
+    font-size: var(--font-size-small);
+}
+
+.endGame__link {
+    display: inline-block;
+    background-image: var(--color-gradient);
+    padding: 20px;
+    width: 100%;
+    max-width: 240px;
+    border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .endGame__wrapper {
+        padding: 60px 20px;
+    }
+}
