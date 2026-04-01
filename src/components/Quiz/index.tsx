@@ -2,7 +2,7 @@
 
 import styles from "./Game.module.css";
 import Answer from "../Answer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Question from "../Question";
 import Loading from "../Loading";
 import { useQuestionContext } from "@/context/questions";
@@ -15,17 +15,43 @@ const Quiz = () => {
     currentQuestionNumber,
     loading,
     currentQuestion,
+    handleAnswerQuestion,
   } = useQuestionContext();
+
+  const [disbledAnswers, setDisabledAnswers] = useState<boolean>(false);
 
   const buttons = Array.from({ length: questionsQuantity }, (_, index) => index + 1);
 
   useEffect(() => {
     const startQuiz = async () => {
       await handleArrangeQuestion()
+      setDisabledAnswers(false);
     }
 
     startQuiz()
   }, [handleArrangeQuestion]);
+
+  const correct = (option: string) => {
+    const isCorrect = currentQuestion?.answered
+      ? currentQuestion?.answered && currentQuestion?.correctAnswer === currentQuestion?.providedAnswer
+      : false
+
+    return (currentQuestion?.answered && option === currentQuestion?.correctAnswer)
+      || (isCorrect && option === currentQuestion?.correctAnswer);
+  };
+
+  const wrong = (option: string) => {
+    const isWrong = currentQuestion?.answered
+      ? currentQuestion?.answered && currentQuestion?.correctAnswer !== currentQuestion?.providedAnswer
+      : false
+
+    return (isWrong && option === currentQuestion?.providedAnswer);
+  };
+
+  const handleSelectAnswer = (answer: string) => {
+    handleAnswerQuestion(answer);
+    setDisabledAnswers(true);
+  }
 
   return (
     <main>
@@ -65,7 +91,12 @@ const Quiz = () => {
                         key={option}
                         answer={option}
                         flag={currentQuestion?.flag}
-                        flagInAnswer={currentQuestion?.flagInAnswer} />
+                        flagInAnswer={currentQuestion?.flagInAnswer}
+                        onSelect={handleSelectAnswer}
+                        selected={currentQuestion?.providedAnswer === option}
+                        correct={correct(option)}
+                        wrong={wrong(option)}
+                        disabled={disbledAnswers} />
                     ))}
                 </div>
               </>}

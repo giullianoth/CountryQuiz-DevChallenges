@@ -11,13 +11,17 @@ type Props = {
     selected?: boolean
     flag?: ICountry["flags"];
     flagInAnswer?: boolean;
+    disabled?: boolean;
+    onSelect: (answer: string) => void;
 };
 
-const Answer = ({ correct, wrong, selected, answer, flag, flagInAnswer }: Props) => {
+const Answer = ({ correct, wrong, selected, answer, flag, flagInAnswer, onSelect, disabled }: Props) => {
     const renderedAnswer = flag && flagInAnswer ? <InlineFlag flagUrl={answer} /> : answer
 
     return (
         <button
+            onClick={() => onSelect(answer)}
+            disabled={disabled}
             className={
                 styles.answer
                 + (correct ? ` ${styles.correct}` : "")

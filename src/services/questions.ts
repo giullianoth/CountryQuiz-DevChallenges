@@ -73,7 +73,21 @@ const useArrangeQuestions = (): IQuestionContext => {
         setCurrentQuestionNumber(1);
         setPoints(0);
         setEndGame(false);
-    }, [])
+    }, []);
+
+    const handleAnswerQuestion = useCallback((providedAnswer: string) => {
+        if (!currentQuestion || !providedAnswer) {
+            return;
+        }
+
+        const isCorrect = providedAnswer === currentQuestion.correctAnswer;
+
+        if (isCorrect) {
+            setPoints(prev => prev + 1);
+        }
+
+        setCurrentQuestion(prev => prev ? { ...prev, answered: true, providedAnswer } : prev);
+    }, [currentQuestion]);
 
     return {
         questionsQuantity: QUESTIONS_QUANTITY,
@@ -87,6 +101,7 @@ const useArrangeQuestions = (): IQuestionContext => {
         handleArrangeQuestion,
         handleEndGame,
         handleRestartGame,
+        handleAnswerQuestion,
     };
 };
 

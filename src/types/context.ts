@@ -12,4 +12,5 @@ export interface IQuestionContext {
     handleArrangeQuestion: () => Promise<void>;
     handleEndGame: () => void;
     handleRestartGame: () => void;
+    handleAnswerQuestion: (providedAnswer: string) => void;
 };

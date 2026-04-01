@@ -5,7 +5,6 @@ import Game from "@/components/Game";
 import { QuestionProvider } from "@/context/questions";
 
 export default function Home() {
-
   return (
     <QuestionProvider>
       <div className="container">

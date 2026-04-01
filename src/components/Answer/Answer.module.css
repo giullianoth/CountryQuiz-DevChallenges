@@ -25,6 +25,7 @@
     transition: var(--transition-default);
 }
 
-.answer:hover::before, .answer.selected::before {
+.answer:not([disabled]):hover::before,
+.answer.selected::before {
     opacity: 1;
 }
