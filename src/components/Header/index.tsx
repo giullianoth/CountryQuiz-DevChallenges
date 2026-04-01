@@ -1,11 +1,9 @@
+import { useQuestionContext } from "@/context/questions";
 import styles from "./Header.module.css";
 
-type Props = {
-    points: number
-    questionsQuantity: number
-};
+const Header = () => {
+    const { points, questionsQuantity } = useQuestionContext();
 
-const Header = ({ points, questionsQuantity }: Props) => {
     return (
         <header className={styles.header}>
             <h1 className={styles.header__title}>Country Quiz</h1>

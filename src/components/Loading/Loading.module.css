@@ -1,0 +1,36 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading__circle {
+    width: 60px;
+    height: 60px;
+    border: 6px solid var(--color-background-tertiary);
+    border-radius: 50%;
+    position: relative;
+}
+
+.loading__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    border: 6px solid transparent;
+    border-top-color: var(--color-text);
+    border-radius: 50%;
+    animation: loading_spin 1s infinite linear;
+}
+
+@keyframes loading_spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

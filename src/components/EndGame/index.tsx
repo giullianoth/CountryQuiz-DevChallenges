@@ -3,11 +3,7 @@
 import styles from "./EndGame.module.css";
 import Image from "next/image";
 
-type Props = {
-    onRestart: () => void
-};
-
-const EndGame = ({ onRestart }: Props) => {
+const EndGame = () => {
     return (
         <div className={styles.endGame__wrapper}>
             <Image
@@ -24,7 +20,7 @@ const EndGame = ({ onRestart }: Props) => {
                 You answer 4/10 correctly
             </p>
 
-            <button className={styles.endGame__link} onClick={onRestart}>
+            <button className={styles.endGame__link}>
                 Play again
             </button>
         </div>

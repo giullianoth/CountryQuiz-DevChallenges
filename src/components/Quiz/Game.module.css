@@ -32,6 +32,12 @@
     background-image: var(--color-gradient);
 }
 
+.game__error {
+    padding: 12px;
+    background-color: var(--color-fail);
+    border-radius: 8px;
+}
+
 .game__currentQuestion {
     font-size: var(--font-size-medium);
     margin-bottom: 40px;

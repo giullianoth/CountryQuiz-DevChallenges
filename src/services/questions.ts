@@ -2,6 +2,9 @@ import { IGeneratedQuestion, IQuestionTemplate, IQuestionField } from "@/types/q
 import { useCallback, useState } from "react";
 import { getAllCountries } from "./api-service";
 import { generateQuestion, getRandom } from "@/utils/questions";
+import { IQuestionContext } from "@/types/context";
+
+const QUESTIONS_QUANTITY = 10;
 
 const QUESTIONS: string[] = [
     "Which is the [flag] of {country}?",
@@ -25,13 +28,16 @@ const QUESTION_TEMPLATES: IQuestionTemplate[] = QUESTIONS.map(question => ({
     targetField: question.substring(question.indexOf("[") + 1, question.indexOf("]")) as IQuestionField,
 }));
 
-const useArrangeQuestions = () => {
+const useArrangeQuestions = (): IQuestionContext => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [currentQuestion, setCurrentQuestion] = useState<IGeneratedQuestion | null>(null);
+    const [currentQuestionNumber, setCurrentQuestionNumber] = useState<number>(1);
     const [selectedQuestions, setSelectedQuestions] = useState<IGeneratedQuestion[]>([]);
+    const [points, setPoints] = useState<number>(0);
+    const [endGame, setEndGame] = useState<boolean>(false);
 
-    const arrangeQuestion = useCallback(async () => {
+    const handleArrangeQuestion = useCallback(async () => {
         setLoading(true);
         setError(null);
 
@@ -51,18 +57,36 @@ const useArrangeQuestions = () => {
             console.log(question);
         } catch (error) {
             console.error("Failed to arrange questions:", error);
-            setError("Failed to arrange questions.");
+            setError("Failed to arrange questions. Please refresh the page and try again.");
         } finally {
             setLoading(false);
         }
     }, []);
+    
+    const handleEndGame = useCallback(() => {
+        setEndGame(true);
+    }, []);
+
+    const handleRestartGame = useCallback(() => {
+        setSelectedQuestions([]);
+        setCurrentQuestion(null);
+        setCurrentQuestionNumber(1);
+        setPoints(0);
+        setEndGame(false);
+    }, [])
 
     return {
+        questionsQuantity: QUESTIONS_QUANTITY,
         loading,
         error,
+        currentQuestionNumber,
+        points,
+        endGame,
         currentQuestion,
         selectedQuestions,
-        arrangeQuestion
+        handleArrangeQuestion,
+        handleEndGame,
+        handleRestartGame,
     };
 };
 

@@ -1,10 +1,12 @@
 import { ICountry } from "@/types/country";
 import { IGeneratedQuestion, IQuestionField, IQuestionTemplate } from "@/types/question";
 
+const MAX_OPTIONS_QUANTITY = 4;
+
 const generateDistractors = (countries: ICountry[], country: ICountry, referenceField: IQuestionField, targetField: IQuestionField): string[] => {
     const distractors = new Set<string>();
 
-    while (distractors.size < 3) {
+    while (distractors.size < MAX_OPTIONS_QUANTITY - 1) {
         if (targetField === "country") {
             let randomCountry: ICountry;
 
