@@ -1,67 +1,65 @@
-import CheckRoundFill from "../svg/CheckRoundFill";
-import CloseRoundFill from "../svg/CloseRoundFill";
-import styles from "./Game.module.css";
+"use client";
 
-const Game = () => {
+import styles from "./Game.module.css";
+import Answer from "../Answer";
+import { useEffect, useState } from "react";
+import { ICountry } from "@/types/country";
+import InlineFlag from "../InlineFlag";
+import useArrangeQuestions from "@/services/questions";
+import { IGeneratedQuestion } from "@/types/question";
+import Question from "../Question";
+
+type Props = {
+  onEndGame: () => void
+  questionsQuantity: number
+  currentQuestionNumber: number
+};
+
+const Game = ({ onEndGame, questionsQuantity, currentQuestionNumber }: Props) => {
+  const buttons = Array.from({ length: questionsQuantity }, (_, index) => index + 1);
+  const { arrangeQuestion, currentQuestion, loading, error } = useArrangeQuestions();
+
+  useEffect(() => {
+    const startQuiz = async () => {
+      await arrangeQuestion()
+    }
+
+    startQuiz()
+  }, [arrangeQuestion]);
+
   return (
     <main>
       <div className={styles.game__container}>
         <div className={styles.game__wrapper}>
           <div className={styles.game__questions}>
-            <button className={`${styles.game__questionButton} ${styles.past}`}>
-              1
-            </button>
-            <button className={styles.game__questionButton}>
-              2
-            </button>
-            <button className={styles.game__questionButton}>
-              3
-            </button>
-            <button className={styles.game__questionButton}>
-              4
-            </button>
-            <button className={styles.game__questionButton}>
-              5
-            </button>
-            <button className={styles.game__questionButton}>
-              6
-            </button>
-            <button className={styles.game__questionButton}>
-              7
-            </button>
-            <button className={styles.game__questionButton}>
-              8
-            </button>
-            <button className={styles.game__questionButton}>
-              9
-            </button>
-            <button className={styles.game__questionButton}>
-              10
-            </button>
+            {buttons.map(btn => (
+              <button
+                key={btn}
+                disabled
+                className={styles.game__questionButton + (btn <= currentQuestionNumber ? ` ${styles.past}` : "")}>
+                {btn}
+              </button>
+            ))}
           </div>
 
           <div className={styles.game__currentQuestion}>
-            <p>Which country does this flag 🇫🇮 belong to?</p>
+            {currentQuestion &&
+              <Question
+                question={currentQuestion?.question}
+                flag={currentQuestion?.flag}
+                flagInQuestion={currentQuestion?.flagInQuestion} />
+            }
           </div>
 
           <div className={styles.game__answers}>
-            <button className={`${styles.game__answer} ${styles.selected}`}>
-              Sweden
-              <CloseRoundFill />
-            </button>
-
-            <button className={styles.game__answer}>
-              Vietnam
-            </button>
-
-            <button className={styles.game__answer}>
-              Finland
-              <CheckRoundFill />
-            </button>
-
-            <button className={styles.game__answer}>
-              Austria
-            </button>
+            {currentQuestion && currentQuestion.options.length > 0 &&
+              currentQuestion.options.map(option => (
+                <Answer
+                  key={option}
+                  answer={option}
+                  flag={currentQuestion?.flag}
+                  flagInAnswer={currentQuestion?.flagInAnswer} />
+              ))}
           </div>
         </div>
       </div>

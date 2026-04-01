@@ -1,0 +1,7 @@
+.flag {
+    display: inline-block;
+    width: 48px;
+    height: 34px;
+    vertical-align: middle;
+    margin-inline: 8px;
+}

@@ -28,10 +28,6 @@
     font-size: var(--font-size-medium);
 }
 
-.game__questionButton:hover {
-    background-color: var(--color-background-tertiary);
-}
-
 .game__questionButton.past {
     background-image: var(--color-gradient);
 }
