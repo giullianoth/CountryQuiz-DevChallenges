@@ -10,10 +10,10 @@ const Game = () => {
         endGame
             ? <EndGame />
 
-            : <>
+            : <div className="wrapper">
                 <Header />
                 <Quiz />
-            </>
+            </div>
     );
 };
 
