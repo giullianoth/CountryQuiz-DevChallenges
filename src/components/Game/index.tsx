@@ -7,13 +7,15 @@ const Game = () => {
     const { endGame } = useQuestionContext();
 
     return (
-        endGame
-            ? <EndGame />
+        <div className="wrapper">
+            {endGame
+                ? <EndGame />
 
-            : <div className="wrapper">
-                <Header />
-                <Quiz />
-            </div>
+                : <>
+                    <Header />
+                    <Quiz />
+                </>}
+        </div>
     );
 };
 
