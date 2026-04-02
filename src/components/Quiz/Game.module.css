@@ -33,6 +33,10 @@
     background-image: var(--color-gradient);
 }
 
+.game__questionButton:not(.past) {
+    cursor: default;
+}
+
 .game__error {
     padding: 12px;
     background-color: var(--color-fail);

@@ -8,7 +8,7 @@ import Loading from "../Loading";
 import { useQuestionContext } from "@/context/questions";
 import Progress from "../Progress";
 
-const REVEAL_ANSWER_TIMEOUT = 1000;
+const REVEAL_ANSWER_TIMEOUT = 2000;
 
 const Quiz = () => {
   const {
@@ -21,6 +21,7 @@ const Quiz = () => {
     handleAnswerQuestion,
     revealed,
     handleGoToQuestion,
+    handleEndGame,
   } = useQuestionContext();
 
   const [disbledAnswers, setDisabledAnswers] = useState<boolean>(false);
@@ -30,13 +31,17 @@ const Quiz = () => {
   useEffect(() => {
     const startQuiz = async () => {
       if (!revealed) {
-        await handleArrangeQuestion()
-        setDisabledAnswers(false);
+        if (currentQuestionNumber > questionsQuantity) {
+          handleEndGame()
+        } else {
+          await handleArrangeQuestion()
+          setDisabledAnswers(false);
+        }
       }
     }
 
     startQuiz()
-  }, [handleArrangeQuestion, revealed]);
+  }, [handleArrangeQuestion, revealed, currentQuestionNumber, handleEndGame, questionsQuantity]);
 
   const correct = (option: string) => {
     const isCorrect = currentQuestion?.answered
@@ -59,8 +64,6 @@ const Quiz = () => {
     handleAnswerQuestion(answer, REVEAL_ANSWER_TIMEOUT);
     setDisabledAnswers(true);
   }
-
-  console.log(currentQuestion);
 
   return (
     <main>
