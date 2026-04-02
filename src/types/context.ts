@@ -14,4 +14,5 @@ export interface IQuestionContext {
     handleEndGame: () => void;
     handleRestartGame: () => void;
     handleAnswerQuestion: (providedAnswer: string, revealTimeout: number) => void;
+    handleGoToQuestion: (questionIndex: number) => void
 };

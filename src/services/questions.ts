@@ -55,7 +55,6 @@ const useArrangeQuestions = (): IQuestionContext => {
 
             setCurrentQuestion(question as IGeneratedQuestion);
             setSelectedQuestions(prev => [...prev, question]);
-            console.log(question);
         } catch (error) {
             console.error("Failed to arrange questions:", error);
             setError("Failed to arrange questions. Please refresh the page and try again.");
@@ -87,7 +86,17 @@ const useArrangeQuestions = (): IQuestionContext => {
             setPoints(prev => prev + 1);
         }
 
+        setSelectedQuestions(prev => prev.map(question => question === currentQuestion
+            ? {
+                ...question,
+                answered: true,
+                providedAnswer,
+            }
+            : question
+        ));
+
         setCurrentQuestion(prev => prev ? { ...prev, answered: true, providedAnswer } : prev);
+
         setRevealed(true);
 
         setTimeout(() => {
@@ -95,6 +104,10 @@ const useArrangeQuestions = (): IQuestionContext => {
             setRevealed(false);
         }, revealTimeout);
     }, [currentQuestion]);
+
+    const handleGoToQuestion = useCallback((questionIndex: number) => {
+        setCurrentQuestion(selectedQuestions[questionIndex])
+    }, [selectedQuestions])
 
     return {
         questionsQuantity: QUESTIONS_QUANTITY,
@@ -110,6 +123,7 @@ const useArrangeQuestions = (): IQuestionContext => {
         handleEndGame,
         handleRestartGame,
         handleAnswerQuestion,
+        handleGoToQuestion,
     };
 };
 

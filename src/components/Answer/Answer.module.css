@@ -29,3 +29,7 @@
 .answer.selected::before {
     opacity: 1;
 }
+
+.answer:disabled {
+    cursor: default;
+}

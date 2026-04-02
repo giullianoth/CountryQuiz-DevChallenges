@@ -8,7 +8,7 @@ import Loading from "../Loading";
 import { useQuestionContext } from "@/context/questions";
 import Progress from "../Progress";
 
-const REVEAL_ANSWER_TIMEOUT = 4000;
+const REVEAL_ANSWER_TIMEOUT = 1000;
 
 const Quiz = () => {
   const {
@@ -20,6 +20,7 @@ const Quiz = () => {
     currentQuestion,
     handleAnswerQuestion,
     revealed,
+    handleGoToQuestion,
   } = useQuestionContext();
 
   const [disbledAnswers, setDisabledAnswers] = useState<boolean>(false);
@@ -59,6 +60,8 @@ const Quiz = () => {
     setDisabledAnswers(true);
   }
 
+  console.log(currentQuestion);
+
   return (
     <main>
       <div className={styles.game__container}>
@@ -69,8 +72,9 @@ const Quiz = () => {
             {buttons.map(btn => (
               <button
                 key={btn}
-                disabled
-                className={styles.game__questionButton + (btn <= currentQuestionNumber ? ` ${styles.past}` : "")}>
+                disabled={!(btn <= currentQuestionNumber)}
+                className={styles.game__questionButton + (btn <= currentQuestionNumber ? ` ${styles.past}` : "")}
+                onClick={() => handleGoToQuestion(btn - 1)}>
                 {btn}
               </button>
             ))}
@@ -104,7 +108,7 @@ const Quiz = () => {
                         selected={currentQuestion?.providedAnswer === option}
                         correct={correct(option)}
                         wrong={wrong(option)}
-                        disabled={disbledAnswers} />
+                        disabled={disbledAnswers || currentQuestion.answered} />
                     ))}
                 </div>
               </>}
