@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import Question from "../Question";
 import Loading from "../Loading";
 import { useQuestionContext } from "@/context/questions";
+import Progress from "../Progress";
+
+const REVEAL_ANSWER_TIMEOUT = 4000;
 
 const Quiz = () => {
   const {
@@ -16,6 +19,7 @@ const Quiz = () => {
     loading,
     currentQuestion,
     handleAnswerQuestion,
+    revealed,
   } = useQuestionContext();
 
   const [disbledAnswers, setDisabledAnswers] = useState<boolean>(false);
@@ -24,12 +28,14 @@ const Quiz = () => {
 
   useEffect(() => {
     const startQuiz = async () => {
-      await handleArrangeQuestion()
-      setDisabledAnswers(false);
+      if (!revealed) {
+        await handleArrangeQuestion()
+        setDisabledAnswers(false);
+      }
     }
 
     startQuiz()
-  }, [handleArrangeQuestion]);
+  }, [handleArrangeQuestion, revealed]);
 
   const correct = (option: string) => {
     const isCorrect = currentQuestion?.answered
@@ -49,13 +55,15 @@ const Quiz = () => {
   };
 
   const handleSelectAnswer = (answer: string) => {
-    handleAnswerQuestion(answer);
+    handleAnswerQuestion(answer, REVEAL_ANSWER_TIMEOUT);
     setDisabledAnswers(true);
   }
 
   return (
     <main>
       <div className={styles.game__container}>
+        {revealed && <Progress timeout={REVEAL_ANSWER_TIMEOUT} />}
+
         <div className={styles.game__wrapper}>
           <div className={styles.game__questions}>
             {buttons.map(btn => (

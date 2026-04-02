@@ -36,6 +36,7 @@ const useArrangeQuestions = (): IQuestionContext => {
     const [selectedQuestions, setSelectedQuestions] = useState<IGeneratedQuestion[]>([]);
     const [points, setPoints] = useState<number>(0);
     const [endGame, setEndGame] = useState<boolean>(false);
+    const [revealed, setRevealed] = useState<boolean>(false);
 
     const handleArrangeQuestion = useCallback(async () => {
         setLoading(true);
@@ -75,7 +76,7 @@ const useArrangeQuestions = (): IQuestionContext => {
         setEndGame(false);
     }, []);
 
-    const handleAnswerQuestion = useCallback((providedAnswer: string) => {
+    const handleAnswerQuestion = useCallback((providedAnswer: string, revealTimeout: number) => {
         if (!currentQuestion || !providedAnswer) {
             return;
         }
@@ -87,6 +88,12 @@ const useArrangeQuestions = (): IQuestionContext => {
         }
 
         setCurrentQuestion(prev => prev ? { ...prev, answered: true, providedAnswer } : prev);
+        setRevealed(true);
+
+        setTimeout(() => {
+            setCurrentQuestionNumber(prev => prev + 1);
+            setRevealed(false);
+        }, revealTimeout);
     }, [currentQuestion]);
 
     return {
@@ -96,6 +103,7 @@ const useArrangeQuestions = (): IQuestionContext => {
         currentQuestionNumber,
         points,
         endGame,
+        revealed,
         currentQuestion,
         selectedQuestions,
         handleArrangeQuestion,

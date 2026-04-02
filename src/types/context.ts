@@ -7,10 +7,11 @@ export interface IQuestionContext {
     currentQuestionNumber: number;
     points: number;
     endGame: boolean;
+    revealed: boolean;
     currentQuestion: IGeneratedQuestion | null;
     selectedQuestions: IGeneratedQuestion[];
     handleArrangeQuestion: () => Promise<void>;
     handleEndGame: () => void;
     handleRestartGame: () => void;
-    handleAnswerQuestion: (providedAnswer: string) => void;
+    handleAnswerQuestion: (providedAnswer: string, revealTimeout: number) => void;
 };
