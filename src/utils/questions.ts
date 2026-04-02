@@ -13,7 +13,10 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
             switch (referenceField) {
                 case "currency":
                     randomCountry = getRandom(
-                        countries.filter(c => c.currencies.every(currency => !country.currencies.includes(currency)))
+                        countries.filter(c =>
+                            c.currencies
+                            && c.currencies.length
+                            && c.currencies.every(currency => !country.currencies.includes(currency)))
                     );
 
                     if (distractors.has(randomCountry.name)) {
@@ -25,7 +28,10 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
 
                 case "language":
                     randomCountry = getRandom(
-                        countries.filter(c => c.languages.every(language => !country.languages.includes(language)))
+                        countries.filter(c =>
+                            c.languages
+                            && c.languages.length
+                            && c.languages.every(language => !country.languages.includes(language)))
                     );
 
                     if (distractors.has(randomCountry.name)) {
@@ -37,7 +43,7 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
 
                 case "flag":
                     randomCountry = getRandom(
-                        countries.filter(c => c.flags.png !== country.flags.png)
+                        countries.filter(c => c.flags && c.flags.png !== country.flags.png)
                     );
 
                     if (distractors.has(randomCountry.name)) {
@@ -49,7 +55,9 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
 
                 default:
                     randomCountry = getRandom(
-                        countries.filter(c => c[referenceField as keyof ICountry] !== country[referenceField as keyof ICountry])
+                        countries.filter(c =>
+                            c[referenceField as keyof ICountry]
+                            && c[referenceField as keyof ICountry] !== country[referenceField as keyof ICountry])
                     );
 
                     if (distractors.has(randomCountry.name)) {
@@ -64,7 +72,10 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
                 case "currency":
                     const randomCurrency = getRandom(
                         countries
-                            .filter(c => c.currencies.every(currency => !country.currencies.includes(currency)))
+                            .filter(c =>
+                                c.currencies
+                                && c.currencies.length
+                                && c.currencies.every(currency => !country.currencies.includes(currency)))
                             .flatMap(c => c.currencies)
                     );
 
@@ -78,7 +89,10 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
                 case "language":
                     const randomLanguage = getRandom(
                         countries
-                            .filter(c => c.languages.every(language => !country.languages.includes(language)))
+                            .filter(c =>
+                                c.languages
+                                && c.languages.length
+                                && c.languages.every(language => !country.languages.includes(language)))
                             .flatMap(c => c.languages)
                     );
 
@@ -92,7 +106,10 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
                 case "border":
                     const randomBorderCode = getRandom(
                         countries
-                            .filter(c => c.borders.every(border => !country.borders.includes(border)))
+                            .filter(c =>
+                                c.borders
+                                && c.borders.length
+                                && c.borders.every(border => !country.borders.includes(border)))
                             .map(c => c.cca3)
                     );
                     const randomBorderCountry = countries.find(c => c.cca3 === randomBorderCode);
@@ -111,7 +128,7 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
                 case "flag":
                     const randomFlag = getRandom(
                         countries
-                            .filter(c => c.flags.png !== country.flags.png)
+                            .filter(c => c.flags && c.flags.png !== country.flags.png)
                             .map(c => c.flags.png)
                     );
 
@@ -125,7 +142,9 @@ const generateDistractors = (countries: ICountry[], country: ICountry, reference
                 default:
                     const randomOption = getRandom(
                         countries
-                            .filter(c => c[targetField as keyof ICountry] !== country[targetField as keyof ICountry])
+                            .filter(c =>
+                                c[targetField as keyof ICountry]
+                                && c[targetField as keyof ICountry] !== country[targetField as keyof ICountry])
                             .map(c => c[targetField as keyof ICountry] as string)
                     );
 

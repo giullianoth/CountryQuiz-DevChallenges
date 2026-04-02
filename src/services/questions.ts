@@ -51,6 +51,10 @@ const useArrangeQuestions = (): IQuestionContext => {
                 country = getRandom(countries.filter(c => c.borders.length > 0));
             }
 
+            if (questionTemplate.targetField === "capital" && !country.capital) {
+                country = getRandom(countries.filter(c => c.capital));
+            }
+
             const question = generateQuestion(questionTemplate, countries, country);
 
             setCurrentQuestion(question as IGeneratedQuestion);

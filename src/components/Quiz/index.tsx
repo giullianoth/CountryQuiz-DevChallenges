@@ -29,7 +29,7 @@ const Quiz = () => {
   const buttons = Array.from({ length: questionsQuantity }, (_, index) => index + 1);
 
   useEffect(() => {
-    const startQuiz = async () => {
+    const arrange = async () => {
       if (!revealed) {
         if (currentQuestionNumber > questionsQuantity) {
           handleEndGame()
@@ -40,7 +40,7 @@ const Quiz = () => {
       }
     }
 
-    startQuiz()
+    arrange()
   }, [handleArrangeQuestion, revealed, currentQuestionNumber, handleEndGame, questionsQuantity]);
 
   const correct = (option: string) => {
