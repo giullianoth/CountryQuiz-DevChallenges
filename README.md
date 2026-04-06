@@ -86,7 +86,7 @@ npm run dev
 - [**Next.js 15**](https://nextjs.org/) - Componentes dos lados Cliente/Servidor. *Server/Client Components.*
 - [**React 19**](https://react.dev/) - Utilizando o novo React Compiler para memorização automática. | *Using the new React Compiler for automatic memorization.*
 - [**TypeScript**](https://www.typescriptlang.org/) - Interfaces para tipagem da API | *API typing interfaces*
-- [**GitHub REST API**](https://docs.github.com/en/rest) - Consumo de dados reais | *Actual data usage*
+- [**REST COUNTRIES API**](https://restcountries.com/) - Consumo de dados reais | *Actual data usage*
 - [**Axios**](https://axios-http.com/) - Instâncias personalizadas e gerenciamento global de requisições. | *Custom instances and global request management.*
 - **CSS Modules** - Estilização isolada e escalável | *Isolated and scalable styling*
 
