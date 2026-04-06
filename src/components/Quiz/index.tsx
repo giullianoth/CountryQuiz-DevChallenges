@@ -93,9 +93,9 @@ const Quiz = () => {
                 <div className={styles.game__currentQuestion}>
                   {currentQuestion &&
                     <Question
-                      question={currentQuestion?.question}
-                      flag={currentQuestion?.flag}
-                      flagInQuestion={currentQuestion?.flagInQuestion} />
+                      question={currentQuestion.question}
+                      flag={currentQuestion.flag}
+                      flagInQuestion={currentQuestion.flagInQuestion} />
                   }
                 </div>
 
@@ -105,10 +105,10 @@ const Quiz = () => {
                       <Answer
                         key={option}
                         answer={option}
-                        flag={currentQuestion?.flag}
-                        flagInAnswer={currentQuestion?.flagInAnswer}
+                        flag={currentQuestion.flag}
+                        flagInAnswer={currentQuestion.flagInAnswer}
                         onSelect={handleSelectAnswer}
-                        selected={currentQuestion?.providedAnswer === option}
+                        selected={currentQuestion.providedAnswer === option}
                         correct={correct(option)}
                         wrong={wrong(option)}
                         disabled={disbledAnswers || currentQuestion.answered} />

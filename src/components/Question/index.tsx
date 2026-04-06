@@ -11,7 +11,7 @@ const Question = ({ question, flag, flagInQuestion }: Props) => {
     const slicedQuestion = flag && flagInQuestion ? question.split("{flag}") : undefined;
 
     const renderedQuestion = flag && flagInQuestion && slicedQuestion
-        ? <>{slicedQuestion[0]}<InlineFlag flagUrl={flag?.png} />{slicedQuestion[1]}</>
+        ? <>{slicedQuestion[0]}<InlineFlag flagUrl={flag.png} />{slicedQuestion[1]}</>
         : question;
 
     return (
